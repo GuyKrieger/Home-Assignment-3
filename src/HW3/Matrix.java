@@ -51,7 +51,7 @@ public class Matrix {
      * @param matrix the matrix been checked.
      * @return integer for square matrix size.
      */
-    public static int getSquareSize( double[][] matrix ){
+    public static int findSquareSize( double[][] matrix ){
         int squareSize = matrix.length;
         for (int row = 0 ; row < matrix.length ; row++)
             if(matrix[row].length > squareSize)
@@ -69,7 +69,7 @@ public class Matrix {
     public static double[][] MatrixValid(double[][] matrix){
         if (isSquare(matrix))
             return matrix;
-        int size = getSquareSize(matrix);
+        int size = findSquareSize(matrix);
         double[][] squareMatrix = new double[size][size];
         for ( int row = 0 ; row < matrix.length ; row++) {
             squareMatrix[row] = Arrays.copyOfRange(matrix[row], 0, size);
