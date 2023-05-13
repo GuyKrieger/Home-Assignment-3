@@ -38,7 +38,7 @@ public class Matrix {
      */
 
 
-    public static boolean checkIfSquare(double[][] matrix) {
+    public static boolean isSquare(double[][] matrix) {
         for(int row = 0 ; row < matrix.length ; row++)
             if( matrix.length != matrix[row].length)
                 return false;
@@ -67,7 +67,7 @@ public class Matrix {
      * @return new square matrix.
      */
     public static double[][] MatrixValid(double[][] matrix){
-        if(checkIfSquare(matrix))
+        if (isSquare(matrix))
             return matrix;
         int size = findSquareSize(matrix);
         double[][] squareMatrix = new double[size][size];
