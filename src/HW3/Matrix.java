@@ -1,6 +1,7 @@
 package HW3;
 import java.util.Arrays;
 public class Matrix {
+
     public static double det ( double[][] matrix ){
         if ( matrix.length == 1) return matrix[0][0];
         if (matrix.length == 2) return matrix[0][0] * matrix[1][1] - matrix[1][0] * matrix[0][1];
@@ -78,7 +79,47 @@ public class Matrix {
 
     }
 
-    // this is a test
+    /**
+     * this method checks if 2 matrix are equal using defoliate threshold.
+     * @param a first matrix.
+     * @param b second matrix.
+     * @return return true/false.
+     */
+
+     public static boolean equlas (double[][] a, double[][] b) {
+        if( a.length != b.length) return false;
+        for( int row = 0 ; row < a.length ; row++)
+            for(int column = 0 ; column < a.length ; column ++)
+                if(! vectorAssignment.equals(a[row][column],b[row][column]))
+                    return false;
+        return true;
+    }
+
+    /**
+     * this method checks if 2 matrix are equal with a given threshold.
+     * @param a first matrix.
+     * @param b second matric
+     * @param treshold given double to compare with.
+     * @return true/false.
+     */
+
+    public static boolean equlas (double[][] a, double[][] b,double treshold) {
+        if( a.length != b.length) return false;
+        for( int row = 0 ; row < a.length ; row++)
+                if(! vectorAssignment.equals(treshold,a[row],b[row]))
+                    return false;
+        return true;
+    }
+    static double slove ( double A [][] , double [] b ) {
+        double[][] newA = MatrixValid(A);
+
+
+    }
+    static double[] validB (int length, double [] b){
+        if(b.length == length) return b;
+
+    }
+
 
 
 
@@ -89,7 +130,9 @@ public class Matrix {
 
     public static void main(String[] args) {
     double[][] wow = {{1,2,3},{0,4,5},{6,0,7}};
+        double[][] wow1 = {{1,2,3},{0,4,5},{6,0,7}};
     double det = det(MatrixValid(wow));
-    System.out.println(det);
+    double d = 0;
+    System.out.println(equlas(wow1,wow1,d));
     }
 }
