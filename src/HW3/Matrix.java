@@ -3,8 +3,8 @@ import java.util.Arrays;
 public class Matrix {
 
     public static double det ( double[][] matrix ){
+        if(!isSquare(matrix)) matrix = validMatrix(matrix);
         if ( matrix.length == 1) return matrix[0][0];
-        if (matrix.length == 2) return matrix[0][0] * matrix[1][1] - matrix[1][0] * matrix[0][1];
         double posNeg, det = 0;
         for(int i = 0 ; i < matrix.length;i++) {
             posNeg = 1 ;
@@ -67,13 +67,11 @@ public class Matrix {
      * @param matrix a not square matrix.
      * @return new square matrix.
      */
-    public static double[][] MatrixValid(double[][] matrix){
-        if (isSquare(matrix))
-            return matrix;
-        int size = findSquareSize(matrix);
-        double[][] squareMatrix = new double[size][size];
+    public static double[][] validMatrix(double[][] matrix){
+        int squareSize = findSquareSize(matrix);
+        double[][] squareMatrix = new double[squareSize][squareSize];
         for ( int row = 0 ; row < matrix.length ; row++) {
-            squareMatrix[row] = Arrays.copyOfRange(matrix[row], 0, size);
+            squareMatrix[row] = Arrays.copyOf(matrix[row],squareSize);
         }
         return squareMatrix;
 
@@ -110,15 +108,70 @@ public class Matrix {
                     return false;
         return true;
     }
-    static double slove ( double A [][] , double [] b ) {
-        double[][] newA = MatrixValid(A);
+
+    /**
+     * @param matrix the matrix thet need to swap rows.
+     * @param i index of one of the swaping rows.
+     * @param j index of the other swaping rows.
+     */
+    public static void swapRows(double[][] matrix,int i , int j){
+        matrix = makeRectangle(matrix);
+        double[] temp = matrix [i];
+        matrix[i] = matrix[j];
+        matrix[j] = temp ;
+        }
 
 
+
+    public static double[][] makeRectangle(double[][] matrix){
+        int rectangleSize = 0 ;
+        for(int row = 0 ; row < matrix.length ; row++)
+        if(matrix[row].length > rectangleSize)
+        rectangleSize = matrix[row].length;
+        for ( int row = 0 ; row < matrix.length ; row++) {
+            matrix[row] = Arrays.copyOf(matrix[row],rectangleSize);
+        }
+        return matrix;
+        
     }
-    static double[] validB (int length, double [] b){
-        if(b.length == length) return b;
 
+
+
+
+   //public static double slove ( double A [][] , double [] b ) { 
+     //   double[][] validA = MatrixValid(A);
+       // double[] validB = validB(validA.length, b);
+
+
+
+    //}
+    //public static double[] validB (int length, double [] b){
+      //  if(b.length == length) return b;
+        //return Arrays.copyOf(b,length);
+    //}
+
+     public static void validTopRow(double[][] a, int column, int row){
+        int leadingOrganRow = 0;
+        int rowToReplace = row;
+    
+        if( a[row][column]== 0){
+            while(row < a.length ){
+                if( a[row][column] != 0){
+                leadingOrganRow = row ;
+                break;
+                } row++;
+            }
+        }
+        swapRows(a,rowToReplace, leadingOrganRow); 
     }
+        
+    
+    
+     
+
+    
+
+    
 
 
 
@@ -129,10 +182,10 @@ public class Matrix {
 
 
     public static void main(String[] args) {
-    double[][] wow = {{1,2,3},{0,4,5},{6,0,7}};
-        double[][] wow1 = {{1,2,3},{0,4,5},{6,0,7}};
-    double det = det(MatrixValid(wow));
-    double d = 0;
-    System.out.println(equlas(wow1,wow1,d));
+    double[][] wow = {{0,2,3},{1,4,5},{6,0,7}};
+      //  double[][] wow1 = {{1,2,3},{0,4,5},{6,0,7} };
+    // System.out.println(det(wow));
+     validTopRow(wow, 0, 0);
+    System.out.println(Arrays.deepToString(wow));
     }
 }
