@@ -87,8 +87,7 @@ public class Matrix {
      public static boolean equlas (double[][] a, double[][] b) {
         if( a.length != b.length) return false;
         for( int row = 0 ; row < a.length ; row++)
-            for(int column = 0 ; column < a.length ; column ++)
-                if(! vectorAssignment.equals(a[row][column],b[row][column]))
+                if(! vectorAssignment.equals(a[row],b[row]))
                     return false;
         return true;
     }
@@ -135,6 +134,15 @@ public class Matrix {
         
     }
 
+    public static void swapColumns ( double[][] matrix , int i , int j){
+        matrix = makeRectangle(matrix);
+        for ( int row = 0 ; row < matrix.length ; row ++){
+            double temp = matrix[row][i];
+            matrix[row][i] = matrix[row][j];
+            matrix[row][j] = temp ;
+        }
+    }
+
 
 
 
@@ -149,27 +157,66 @@ public class Matrix {
       //  if(b.length == length) return b;
         //return Arrays.copyOf(b,length);
     //}
+    public static int leadingColumn ;    
 
-     public static void validTopRow(double[][] a, int column, int row){
-        int leadingOrganRow = 0;
-        int rowToReplace = row;
+    public static double[][] gaussianElimination (double[][] matrix){
+        leadingColumn = 0 ;
+        int leadingRow = 0 ; 
+        while(leadingColumn < matrix.length ){
+            validTopRow( matrix , leadingRow);
+            changeColumnToOne(matrix , leadingRow);
+            if(isRowLeading){
+                for ( int row = leadingRow + 1 ; row < matrix.length ; row++){
+                    if ( matrix [row][leadingColumn] != 0)
+                    matrix[row] = vectorAssignment.difference(matrix[row], matrix[leadingRow]);
+                }
+                leadingRow ++;
+            }   leadingColumn ++ ; 
+            
+         } return matrix;
+    }
+
+    public static boolean isRowLeading = false ;
     
-        if( a[row][column]== 0){
-            while(row < a.length ){
-                if( a[row][column] != 0){
-                leadingOrganRow = row ;
-                break;
-                } row++;
-            }
+    public static void validTopRow(double[][] matrix, int leadingRow){
+        if( matrix[leadingRow][leadingColumn] == 0 ){
+            for(int newLeadingRow = leadingRow + 1 ; newLeadingRow < matrix.length ; newLeadingRow++ ){
+                    if (matrix[newLeadingRow][leadingColumn] != 0 ){
+                        isRowLeading = true ;
+                        swapRows(matrix,leadingRow, newLeadingRow);
+                        break;
+                    }
+                    else isRowLeading = false;
+                 
+            } 
         }
-        swapRows(a,rowToReplace, leadingOrganRow); 
+        else isRowLeading = true ;
     }
         
+    public static void changeColumnToOne (double[][] matrix, int leadingRow){
+             for (int row = leadingRow ; row  < matrix.length ; row++){
+                double leadingValiu = matrix[row][leadingColumn];
+                    if ( leadingValiu != 0)
+                        matrix[row] = vectorAssignment.product(1/leadingValiu, matrix[row]);
+         }
+        }    
+        
+    public static String toString ( double[][] matrix){
+        String stringMatrix = "";
+        for( int row = 0 ; row < matrix.length-1 ; row ++){
+           stringMatrix += "(" + Arrays.toString(matrix[row]).substring(1,matrix[row].length*5-1) +")\n";
+            }
+            int lastRow = matrix.length - 1 ;
+            stringMatrix += "(" + Arrays.toString(matrix[lastRow]).substring(1,lastRow*5-1) +")";
+            return stringMatrix;
+        }
     
-    
-     
 
+        
     
+
+
+
 
     
 
@@ -182,10 +229,12 @@ public class Matrix {
 
 
     public static void main(String[] args) {
-    double[][] wow = {{0,2,3},{1,4,5},{6,0,7}};
+    double[][] wow = {{1,2,3,4,6},{4,5},{6,7,8}};
       //  double[][] wow1 = {{1,2,3},{0,4,5},{6,0,7} };
     // System.out.println(det(wow));
-     validTopRow(wow, 0, 0);
-    System.out.println(Arrays.deepToString(wow));
+     //validTopRow(wow, 0, 0);
+    //System.out.println(Arrays.deepToString(gaussianElimination(wow)));
+    //swapColumns(wow,1,2);
+    System.out.println(toString(wow));
     }
 }

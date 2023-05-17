@@ -89,7 +89,7 @@ public class vectorAssignment {
 
     public static boolean equals(double a, double b) {
         double THRESHOLD = 1.0E-10;
-        return Math.abs(a - b) < 1.0E-10;
+        return Math.abs(a - b) < THRESHOLD;
     }
 
     public static void main(String[] args) {
